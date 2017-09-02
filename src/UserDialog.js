@@ -116,6 +116,10 @@ export default class UserDialog extends Component {
     }
     signIn(e){
         e.preventDefault()
+        if (this.state.formatData.username === '' || this.state.formatData.password === '') {
+            alert('用户名和密码不能为空！请重新输入')
+            return
+        }
         let successFn = (user) => {
             this.props.onSignIn.call(null,user)
         }
@@ -138,6 +142,14 @@ export default class UserDialog extends Component {
     }
     signUp(e){
         e.preventDefault()
+        if (!fChkMail(this.state.formatData.email)) {
+            alert('邮箱格式错误！请重新输入')
+            return
+        }
+        if (this.state.formatData.username === '' || this.state.formatData.password === '') {
+            alert('用户名和密码不能为空！请重新输入')
+            return
+        }
         let {email,username,password} = this.state.formatData
         let successFn = (user) => {
             this.props.onSignIn.call(null,user)
@@ -164,6 +176,10 @@ export default class UserDialog extends Component {
     }
     resetPassword(e){
         e.preventDefault()
+        if (!fChkMail(this.state.formatData.email)) {
+            alert('邮箱格式错误！请重新输入')
+            return
+        }
         let successFn = (success) => {
             if (success) {
                 if (window.confirm('密码重置链接发送成功，请及时查看邮箱！是否返回登录界面？')) {
@@ -176,5 +192,10 @@ export default class UserDialog extends Component {
         }
         sendResetPasswordEmail(this.state.formatData.email,successFn,errorFn)
     }
-
 }
+
+function fChkMail(szMail){ 
+    var szReg=/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/; 
+    var bChk=szReg.test(szMail);
+    return bChk; 
+} 
