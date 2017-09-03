@@ -162,7 +162,6 @@ class App extends Component {
   toggle(e,todo){
     todo.status = todo.status === 'completed' ? '' : 'completed'
     Module.updateTodo(todo,(response) => {
-      alert('更新成功')
       this.setState(this.state)
     },(error) => {
       console.log(error)
@@ -171,7 +170,6 @@ class App extends Component {
 
   delete(e,todo){
     Module.destroyTodo(todo.id,(res) => {
-      alert('删除成功')
       todo.deleted = true
       this.setState(this.state)
     },(error) => {
@@ -262,14 +260,5 @@ class App extends Component {
     })
     
   }
-
-
-
-
-}
-var newGroupId = 0;
-function newGroupIdMaker(){
-  newGroupId += 1
-  return newGroupId
 }
 export default App;
